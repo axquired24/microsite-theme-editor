@@ -5,6 +5,17 @@ import {
 const run = () => {
   createApp({
     // exposed to all expressions
+    logo: {
+      merchant: {
+        bb: "https://zola-cdn.s3.ap-southeast-3.amazonaws.com/bluebird-header.png",
+        mceasy: "https://zola-cdn.s3.ap-southeast-3.amazonaws.com/mceasy-header.png",
+        maxim: "https://zola-cdn.s3.ap-southeast-3.amazonaws.com/maxim-header.png"
+      },
+      other: {
+        insightDark: "https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/bluebird-microsite-8gwkhb/assets/tzyt6sxrsz2z/dark-powered-by-insight.png",
+        insightWhite: "https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/bluebird-microsite-8gwkhb/assets/0ke38vc9gqa0/light-powered-by-insight.png"
+      }
+    },
     count: 0,
     visibleContent: "site", // site/form
     detailTransaksi: [
@@ -41,23 +52,27 @@ const run = () => {
     ],
     theme: {
       color: {
-        primary: "#FF3333",
-        secondary: "#018534",
-        headerBg: "#FF3333",
+        primary: "#005EB8",
+        secondary: "#167F50",
+        headerBg: "#005EB8",
         headerTextColor: "light",
         buttonTextColor: "light"
       },
       text: {
-        headerTitle: "Driver Special"
+        homepageTitle: "Driver Special"
+      },
+      image: {
+        headerLogo: "https://zola-cdn.s3.ap-southeast-3.amazonaws.com/bluebird-header.png"
       }
     },
     themeForm: {
-      headerTitle: "",
+      homepageTitle: "",
       primaryColor: "",
       secondaryColor: "",
       headerBgColor: "",
       headerTextColor: "",
-      buttonTextColor: ""
+      buttonTextColor: "",
+      headerLogo: ""
     },
     colorPickerModels: [
       ["Header Background Color", "headerBgColor"],
@@ -69,19 +84,20 @@ const run = () => {
       ["Button Text Color", "buttonTextColor"]
     ],
     currentThemeToForm() {
-      const currentTheme = JSON.parse(JSON.stringify(this.theme))
+      const currentTheme = this.jsonObj(this.theme)
       const newThemeForm = {
-        headerTitle: currentTheme.text.headerTitle,
+        homepageTitle: currentTheme.text.homepageTitle,
         primaryColor: currentTheme.color.primary,
         secondaryColor: currentTheme.color.secondary,
         headerBgColor: currentTheme.color.headerBg,
         headerTextColor: currentTheme.color.headerTextColor,
-        buttonTextColor: currentTheme.color.buttonTextColor
+        buttonTextColor: currentTheme.color.buttonTextColor,
+        headerLogo: currentTheme.image.headerLogo
       }
       this.themeForm = newThemeForm
     },
     applyThemeUsingForm() {
-      const currentForm = JSON.parse(JSON.stringify(this.themeForm))
+      const currentForm = this.jsonObj(this.themeForm)
       const newTheme = {
         color: {
           primary: currentForm.primaryColor,
@@ -91,12 +107,18 @@ const run = () => {
           buttonTextColor: currentForm.buttonTextColor
         },
         text: {
-          headerTitle: currentForm.headerTitle
+          homepageTitle: currentForm.homepageTitle
+        },
+        image: {
+          headerLogo: currentForm.headerLogo
         }
       }
       this.theme = newTheme
 
       return true
+    },
+    autocompleteLogo(logoUrl) {
+      this.themeForm.headerLogo = logoUrl
     },
     applyNewTheme() {
       const isCorrect = this.applyThemeUsingForm()
@@ -106,8 +128,16 @@ const run = () => {
     },
   
     // getters
-    get plusOne() {
-      return this.count + 1
+    get logoList() {
+      return Object.entries(this.logo.merchant)
+    },
+    get riwayatBtnColorCls() {
+      let colorCls = "bg-white text-white";
+      if(this.theme.color.headerTextColor === "dark") {
+        colorCls = "bg-black text-black";
+      } // endif
+
+      return colorCls;
     },
     // methods
     toggleContent() {
@@ -120,6 +150,13 @@ const run = () => {
     },
     darkLightToColor(param) {
       return param == 'dark' ? '#000000' : '#FFFFFF';
+    },
+    copiedToClipboard() {
+      alert("Theme config copied to clipboard. If not, you can also check your browser's console.")
+      console.log(this.jsonObj(this.theme))
+    },
+    jsonObj(obj) {
+      return JSON.parse(JSON.stringify(obj))
     }
   }).mount()
 }

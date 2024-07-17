@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsite Theme</title>
+</head>
+
+<body>
+  <div v-scope class="flex justify-center text-gray-900">
+    <div
+      class="max-w-[400px] phone-height w-full bg-white border border-gray-600 rounded-md mt-5 mb-2 relative flex flex-col justify-between">
+      <div
+        class="toggle-icon absolute absolute -top-4 -left-4 p-2 bg-white shadow-md rounded-full group hover:cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+          class="group-hover:animate-spin w-5">
+          <path fill-rule="evenodd"
+            d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 0 1-.517.608 7.45 7.45 0 0 0-.478.198.798.798 0 0 1-.796-.064l-.453-.324a1.875 1.875 0 0 0-2.416.2l-.243.243a1.875 1.875 0 0 0-.2 2.416l.324.453a.798.798 0 0 1 .064.796 7.448 7.448 0 0 0-.198.478.798.798 0 0 1-.608.517l-.55.092a1.875 1.875 0 0 0-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 0 1-.064.796l-.324.453a1.875 1.875 0 0 0 .2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 0 1 .796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 0 1 .517-.608 7.52 7.52 0 0 0 .478-.198.798.798 0 0 1 .796.064l.453.324a1.875 1.875 0 0 0 2.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 0 1-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 0 0 1.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 0 1-.608-.517 7.507 7.507 0 0 0-.198-.478.798.798 0 0 1 .064-.796l.324-.453a1.875 1.875 0 0 0-.2-2.416l-.243-.243a1.875 1.875 0 0 0-2.416-.2l-.453.324a.798.798 0 0 1-.796.064 7.462 7.462 0 0 0-.478-.198.798.798 0 0 1-.517-.608l-.091-.55a1.875 1.875 0 0 0-1.85-1.566h-.344ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z"
+            clip-rule="evenodd" />
+        </svg>
+      </div>
+
+      <div class="microsite flex flex-col justify-between">
+        <div class="top-section">
+          <div class="appbar bg-sky-700 text-white p-4">
+            <div class="flex justify-end">
+              <button
+                class="px-3 py-1 text-sm bg-white text-black opacity-70 hover:opacity-50 rounded-md">Riwayat</button>
+            </div>
+            <div class="flex justify-between mt-2 font-semibold">
+              <div>Merchant Logo</div>
+              <div>Insight Inovasi</div>
+            </div>
+          </div>
+          <div class="header bg-sky-700 text-white px-4 py-3 font-bold text-lg">
+            {{ theme.text.headerTitle }}
+          </div>
+          <div class="bg-white px-3 pt-8 flex flex-col items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-32 text-green-700">
+              <path fill-rule="evenodd"
+                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                clip-rule="evenodd" />
+            </svg>
+
+            <div class="text-xl font-semibold mb-5 mt-2">Transaksi Berhasil</div>
+
+            <div class="border border-gray-400 text-sm w-full rounded-md px-3 py-3">
+              <h3 class="font-semibold">Detail Transaksi</h3>
+              <div class="space-y-3 my-3" v-for="(item, itemIdx) in detailTransaksi">
+                <div :class="'flex justify-between ' + (item[2] == '-' ? 'border-b border-gray-400 pb-3' : null)"
+                  :key="itemIdx">
+                  <span>{{ item[0] }}</span>
+                  <span>{{ item[1] }}</span>
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <span>Total dibayar</span>
+                <span class="font-semibold text-green-600">Rp 22.500</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-section p-3">
+          <button :style="{backgroundColor: theme.color.primary}"
+            class="text-white hover:opacity-80 font-semibold w-full px-4 py-3 text-center rounded-md">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script type="module">
+    import { run } from './run.js';
+    run()
+  </script>
+</body>
+
+</html>
